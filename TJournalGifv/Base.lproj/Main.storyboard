@@ -3,6 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,18 +23,21 @@
                                     <constraint firstAttribute="height" constant="60" id="Osn-Qp-xht"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtT-5r-pIP">
-                                <rect key="frame" x="76" y="50.5" width="291" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="descriptiondfg dfg df gsdf g sdfg sdf g sdf g  df g ds fg ds g dsg d sg d fg ds fgddg fdg df g df g df g df  g df g df g" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtT-5r-pIP">
+                                <rect key="frame" x="76" y="41" width="291" height="50.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="F1B-EQ-ZMK">
-                                <rect key="frame" x="0.0" y="92" width="375" height="526"/>
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="518.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subsite title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0j-fR-ro8">
-                                <rect key="frame" x="76" y="16" width="291" height="26.5"/>
+                                <rect key="frame" x="76" y="16" width="291" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="bPF-9w-4hi"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -44,17 +48,17 @@
                             <constraint firstItem="w0j-fR-ro8" firstAttribute="leading" secondItem="o8R-zZ-iAF" secondAttribute="trailing" constant="8" id="0rZ-mI-0hL"/>
                             <constraint firstItem="o8R-zZ-iAF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="5C0-CC-WQC"/>
                             <constraint firstItem="F1B-EQ-ZMK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Bct-lv-hzT"/>
+                            <constraint firstItem="F1B-EQ-ZMK" firstAttribute="top" secondItem="dtT-5r-pIP" secondAttribute="bottom" constant="8" id="CCn-B0-Fs0"/>
                             <constraint firstItem="w0j-fR-ro8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="GSb-Iq-eI3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w0j-fR-ro8" secondAttribute="trailing" constant="8" id="IIR-69-FP5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dtT-5r-pIP" secondAttribute="trailing" constant="8" id="Lz2-XE-yeb"/>
                             <constraint firstAttribute="trailing" secondItem="w0j-fR-ro8" secondAttribute="trailing" constant="8" id="Qzh-7z-e3V"/>
                             <constraint firstItem="w0j-fR-ro8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="TSI-dO-M1Q"/>
-                            <constraint firstItem="dtT-5r-pIP" firstAttribute="top" secondItem="w0j-fR-ro8" secondAttribute="bottom" constant="8" id="UAO-iE-em4"/>
                             <constraint firstItem="F1B-EQ-ZMK" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ULi-t8-Mnr"/>
                             <constraint firstItem="F1B-EQ-ZMK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="aVm-GJ-A7l"/>
                             <constraint firstItem="dtT-5r-pIP" firstAttribute="leading" secondItem="o8R-zZ-iAF" secondAttribute="trailing" constant="8" id="iRi-nt-IVH"/>
+                            <constraint firstItem="dtT-5r-pIP" firstAttribute="top" secondItem="w0j-fR-ro8" secondAttribute="bottom" constant="5" id="lSI-nj-JLY"/>
                             <constraint firstItem="o8R-zZ-iAF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="p5A-mv-NHX"/>
-                            <constraint firstItem="F1B-EQ-ZMK" firstAttribute="top" secondItem="o8R-zZ-iAF" secondAttribute="bottom" constant="16" id="sxh-Dn-3Mp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -78,7 +82,13 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tKj-w1-BO1">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="tg-color"/>
+                        <color key="barTintColor" name="tg-yellow-light"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" name="tg-color"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="czC-UK-nhn"/>
@@ -100,14 +110,38 @@
                         <viewLayoutGuide key="safeArea" id="VEq-he-vJI"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" id="b86-Yn-eCK"/>
+                    <connections>
+                        <segue destination="ZwL-GC-HgA" kind="presentation" identifier="PassToken" id="aHr-ep-PYI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zQU-e4-OA7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="493"/>
+            <point key="canvasLocation" x="1047" y="493"/>
+        </scene>
+        <!--Qr Scanner Controller-->
+        <scene sceneID="U0U-gA-1rJ">
+            <objects>
+                <viewController id="ZwL-GC-HgA" customClass="QrScannerController" customModule="TJournalGifv" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hgl-2h-xlK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="seF-rn-JQK"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eFY-tU-78b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="493"/>
         </scene>
     </scenes>
     <resources>
         <image name="feed" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
+        <namedColor name="tg-color">
+            <color red="0.89803921568627454" green="0.6588235294117647" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tg-yellow-light">
+            <color red="1" green="0.95686274509803926" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

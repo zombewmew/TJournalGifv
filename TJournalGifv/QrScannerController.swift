@@ -9,9 +9,11 @@
 import AVFoundation
 import UIKit
 
-class QrScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QrScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate{
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    
+    var callback : ((String) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,14 +87,13 @@ class QrScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            found(code: stringValue)
+            
+            let token = String(stringValue.dropFirst(3))
+            callback?(token)
+            
+            self.dismiss(animated: true, completion: nil)
+            
         }
-
-        dismiss(animated: true)
-    }
-
-    func found(code: String) {
-        print(code)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -102,4 +103,5 @@ class QrScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+
 }

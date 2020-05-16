@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3135EBBD246B3BDB00FCFA90 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */; };
 		313C2A17245A1A7800EBF4A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A16245A1A7800EBF4A1 /* AppDelegate.swift */; };
 		313C2A19245A1A7800EBF4A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A18245A1A7800EBF4A1 /* SceneDelegate.swift */; };
 		313C2A1B245A1A7800EBF4A1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A1A245A1A7800EBF4A1 /* FeedViewController.swift */; };
@@ -14,8 +15,8 @@
 		313C2A20245A1A8300EBF4A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 313C2A1F245A1A8300EBF4A1 /* Assets.xcassets */; };
 		313C2A23245A1A8300EBF4A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 313C2A21245A1A8300EBF4A1 /* LaunchScreen.storyboard */; };
 		313C2A2B245AD60800EBF4A1 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A2A245AD60800EBF4A1 /* RequestManager.swift */; };
-		313C2A2D245AD66900EBF4A1 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A2C245AD66900EBF4A1 /* PhotoModel.swift */; };
-		313C2A2F245AD69700EBF4A1 /* PhotosData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A2E245AD69700EBF4A1 /* PhotosData.swift */; };
+		313C2A2D245AD66900EBF4A1 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A2C245AD66900EBF4A1 /* DataModel.swift */; };
+		313C2A2F245AD69700EBF4A1 /* DecodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A2E245AD69700EBF4A1 /* DecodeData.swift */; };
 		3142238E245C5A9D00260B6D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3142238D245C5A9D00260B6D /* ProfileViewController.swift */; };
 		3142239B245DFFD200260B6D /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31422399245DFFD200260B6D /* FeedViewCell.swift */; };
 		3142239C245DFFD200260B6D /* FeedViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3142239A245DFFD200260B6D /* FeedViewCell.xib */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		313C2A13245A1A7800EBF4A1 /* TJournalGifv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TJournalGifv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		313C2A16245A1A7800EBF4A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		313C2A18245A1A7800EBF4A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,8 +35,8 @@
 		313C2A22245A1A8300EBF4A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		313C2A24245A1A8300EBF4A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		313C2A2A245AD60800EBF4A1 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
-		313C2A2C245AD66900EBF4A1 /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
-		313C2A2E245AD69700EBF4A1 /* PhotosData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosData.swift; sourceTree = "<group>"; };
+		313C2A2C245AD66900EBF4A1 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		313C2A2E245AD69700EBF4A1 /* DecodeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeData.swift; sourceTree = "<group>"; };
 		3142238D245C5A9D00260B6D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		31422399245DFFD200260B6D /* FeedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
 		3142239A245DFFD200260B6D /* FeedViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedViewCell.xib; sourceTree = "<group>"; };
@@ -79,8 +81,9 @@
 				313C2A1A245A1A7800EBF4A1 /* FeedViewController.swift */,
 				3142238D245C5A9D00260B6D /* ProfileViewController.swift */,
 				313C2A2A245AD60800EBF4A1 /* RequestManager.swift */,
-				313C2A2C245AD66900EBF4A1 /* PhotoModel.swift */,
-				313C2A2E245AD69700EBF4A1 /* PhotosData.swift */,
+				3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */,
+				313C2A2C245AD66900EBF4A1 /* DataModel.swift */,
+				313C2A2E245AD69700EBF4A1 /* DecodeData.swift */,
 				313C2A1C245A1A7800EBF4A1 /* Main.storyboard */,
 				313C2A1F245A1A8300EBF4A1 /* Assets.xcassets */,
 				313C2A21245A1A8300EBF4A1 /* LaunchScreen.storyboard */,
@@ -163,14 +166,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3135EBBD246B3BDB00FCFA90 /* KeyChain.swift in Sources */,
 				313C2A1B245A1A7800EBF4A1 /* FeedViewController.swift in Sources */,
 				313C2A17245A1A7800EBF4A1 /* AppDelegate.swift in Sources */,
-				313C2A2F245AD69700EBF4A1 /* PhotosData.swift in Sources */,
+				313C2A2F245AD69700EBF4A1 /* DecodeData.swift in Sources */,
 				313C2A19245A1A7800EBF4A1 /* SceneDelegate.swift in Sources */,
 				3142239B245DFFD200260B6D /* FeedViewCell.swift in Sources */,
 				3142239E245E1A5D00260B6D /* VideoPlayerView.swift in Sources */,
 				3142238E245C5A9D00260B6D /* ProfileViewController.swift in Sources */,
-				313C2A2D245AD66900EBF4A1 /* PhotoModel.swift in Sources */,
+				313C2A2D245AD66900EBF4A1 /* DataModel.swift in Sources */,
 				313C2A2B245AD60800EBF4A1 /* RequestManager.swift in Sources */,
 				314223A02462D9D500260B6D /* QrScannerController.swift in Sources */,
 			);

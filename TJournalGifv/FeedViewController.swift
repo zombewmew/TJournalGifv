@@ -18,8 +18,8 @@ class FeedViewController: UIViewController {
     
     @IBOutlet weak var feedTableView: UITableView!
     
-    var photoManager = RequestManager()
-    var photos: [PhotoModel] = []
+    var postManager = RequestManager()
+    var posts: [PostModel] = []
     
     //1
     //let video = videos[indexPath.row]
@@ -31,38 +31,70 @@ class FeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         feedTableView.register(UINib(nibName: "FeedViewCell", bundle: nil), forCellReuseIdentifier: "PostCell")
-        //feedTableView.register(FeedViewCell.self, forCellReuseIdentifier: "PostCell")
-        self.feedTableView.delegate = self
-        self.feedTableView.dataSource = self
+        feedTableView.delegate = self
+        feedTableView.dataSource = self
+        feedTableView.prefetchDataSource = self
         
-        //photoManager.delegate = self
-        photoManager.fetchPhotos()
+        //feedTableView.rowHeight = UITableView.automaticDimension
+        //feedTableView.estimatedRowHeight = 500.0
+        
+        postManager.delegateFeed = self
+        postManager.fetchPosts()
     }
-
+    
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= posts.count
+    }
 
 }
 
-extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
+//MARK: - Table View Controller Extension
+
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("sdfsdf")
+
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! FeedViewCell
         
-        let videoURL = URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        /*if posts[indexPath.row].name != "" {
+            cell.postTitle.text = posts[indexPath.row].name
+        } else {
+            cell.postTitle.text = "Без заголовка"
+            //cell.postTitle.frame.size.height = 0
+            //cell.postTitle.frame.size.width = 0
+            //cell.postTitle.isHidden = true
+        }
+        */
+        cell.configure(post: posts[indexPath.row])
+        
+        if isLoadingCell(for: indexPath) {
+            print(indexPath)
+            //cell.configure(with: nil)
+        } else {
+            cell.configure(post: posts[indexPath.row])
+            //cell.configure(with: posts.contentItem(at: indexPath.row))
+        }
+        
+        
+        //let videoURL = URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
         //let videoURL = URL(string: "https://www.youtube.com/watch?v=zsc-S3-b1YU")
-        let player = AVPlayer(url: videoURL!)
+        //let player = AVPlayer(url: videoURL!)
+        /*cell.postView.frame.size.height = CGFloat(posts[indexPath.row].height)
+        print(cell.postView.frame.size.height)
+        let player = AVPlayer(url: posts[indexPath.row].video_url)
         
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = cell.bounds
         
         cell.layer.addSublayer(playerLayer)
-        cell.postView.layer.addSublayer(playerLayer)
+        cell.postView.layer.addSublayer(playerLayer)*/
+        
         //cell.playerView?.layer.addSublayer(playerLayer)
         //player.play()
         
@@ -80,12 +112,45 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
 
         return cell*/
         
+
         
-        cell.postTitle.text = "lkfmsldfmlsdf"
         return cell
         
     }
     
-
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? FeedViewCell else { return }
+        cell.play()
+    }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? FeedViewCell else { return }
+        cell.pause()
+    }
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            postManager.fetchPosts()
+        }
+    }
+    
+}
+
+// MARK: - Extension for Request Delegate
+
+extension FeedViewController: RequestFeedManagerDelegate {
+    func didUpdatePosts(_: RequestManager, posts: [PostModel], subsite: SubsiteModel) {
+        DispatchQueue.main.async {
+            self.subsiteTitle.text = subsite.name
+            self.subsiteDescription.text = subsite.description
+            self.subsiteImage.load(url: (URL(string: subsite.avatar_url)!))
+            
+            self.posts = posts
+            self.feedTableView.reloadData()
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
 }

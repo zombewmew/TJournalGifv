@@ -8,151 +8,224 @@
 
 import Foundation
 
-protocol RequestManagerDelegate {
-    func didUpdatePhotos(_: RequestManager, photos: [PhotoModel])
+protocol RequestFeedManagerDelegate {
+    func didUpdatePosts(_: RequestManager, posts: [PostModel], subsite: SubsiteModel)
     func didFailWithError(error: Error)
 }
 
+protocol RequestAuthManagerDelegate {
+    func didGetUserData(_: RequestManager, userData: UserModel)
+    func didFailWithError(message: String)
+}
+
+
 struct RequestManager {
-    //let apiToken = "14bc838679092909de6dc493a3a218b98371982b66981da3058b22e240ea431b"
-    //78c52895d29547e179b5e36527c709fbbaacc13a3cd6dff866da16536700ab80
-    //let tjUrl = URL(string: "https://api.tjournal.ru/v1.8/subsite/237832/timeline/new?count=10")!
     
-    let tjUrl = URL(string: "https://api.tjournal.ru/v1.8/subsite/237832/")!
+    let apiDeveloperToken = "14bc838679092909de6dc493a3a218b98371982b66981da3058b22e240ea431b"
     
+    let postsUrl = URL(string: "https://api.tjournal.ru/v1.8/subsite/237832/timeline/new?count=10")!
+    let subsiteUrl = URL(string: "https://api.tjournal.ru/v1.8/subsite/237832/")!
     let meUrl = URL(string: "https://api.tjournal.ru/v1.8/user/me")!
-    
     let qrUrl = URL(string: "https://api.tjournal.ru/v1.8/auth/qr")!
     
-    //let request = NSMutableURLRequest(url: NSURL(string: http://endpoint)! as URL)
+    var delegateFeed: RequestFeedManagerDelegate?
+    var delegateAuth: RequestAuthManagerDelegate?
     
-    /*var request = URLRequest(url: tjUrl)
-    request.httpMethod = "GET"
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")*/
     
-    //request.addValue("4180b1645f624408b6291349204122344", forHTTPHeaderField: "X-Auth-Token")
-    //request.HTTPMethod = "GET" // or POST or whatever
-    //NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
-        // handle your data here
-    //}
-    
-    //let requestURL = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=a7728079742776c4bbf0bc9f47661701&format=json&nojsoncallback=1&per_page=20"
-    
-    var delegate: RequestManagerDelegate?
-    
-    func fetchPhotos() {
-        
-        var request = URLRequest(url: tjUrl)
-        request.httpMethod = "GET"
-        //request.
-        //request.addValue(apiToken, forHTTPHeaderField: "X-Device-Token")
-        //request.add
-        
-        //let urlString = "\(requestURL)"
-        performRequest(with: request)
-    }
+    //MARK: - Аuthorization
     
     func auth(token: String) {
         
-        print(token)
         var request = URLRequest(url: qrUrl)
-        request.httpMethod = "POST"
-         
-        // HTTP Request Parameters which will be sent in HTTP Request Body
         let postString = "token=\(token)";
-        // Set HTTP Request Body
+        
+        request.httpMethod = "POST"
         request.httpBody = postString.data(using: String.Encoding.utf8);
-        // Perform HTTP Request
+
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 
-                // Check for Error
-                if let error = error {
-                    print("Error took place \(error)")
-                    return
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    if let longToken = response.value(forHTTPHeaderField: "x-device-token") {
+                        let data = Data(from: longToken)
+                        
+                        let status = KeyChain.save(key: "token", data: data)
+                        print("status: ", status)
+
+                    }
                 }
-         
-                // Convert HTTP Response Data to a String
-                if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                    print("Response data string:\n \(dataString)")
+            }
+            
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                
+                print("Response data string:\n \(dataString)")
+                do {
+                    let responseData = try JSONDecoder().decode(Message.self, from: data)
+                    if responseData.message == "" {
+                        let responseData = try JSONDecoder().decode(qrData.self, from: data)
+                        let userProfile = UserModel(id: responseData.result.id, name: responseData.result.name, avatar_url: responseData.result.avatar_url)
+                        self.delegateAuth?.didGetUserData(self, userData: userProfile)
+                        
+                    } else {
+                        let responseData = try JSONDecoder().decode(ErrorData.self, from: data)
+                        self.delegateAuth?.didFailWithError(message: responseData.message)
+                    }
+                    
+                } catch let error {
+                     print(error)
                 }
+            }
         }
         task.resume()
-        
-        /*var request = URLRequest(url: qrUrl)
-        
-        
-        request.httpMethod = "POST"
-        //apiToken = token
-        //request.addValue(token, forHTTPHeaderField: "X-Device-Token")
-        request.addValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        //request.setValue("multipart/form-data; token=\(token)", forHTTPHeaderField: "Content-Type")
-        
-        
-        //create the session object
-        let session = URLSession.shared
-
-        do {
-            //let bodyData = "token=\(token)"
-            //print(bodyData.data(using: .utf8))
-            //request.httpBody = bodyData.data(using: .utf8)
-            
-            let d = "token=\(token)"
-            print(d)
-            request.httpBody = d.data(using: .utf8)
-            //request.httpBody = bodyData.data(using: .utf8)
-            //request.httpBody = bodyData.data(using: <#String.Encoding#>, usingEncoding: NSUTF8StringEncoding);
-            //request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        */
-
-    
-        //create dataTask using the session object to send data to the server
-        /*let task = session.dataTask(with: request, completionHandler: { data, response, error in
-
-            guard error == nil else {
-                return
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                //create json object from data
-                print(request.httpBody)
-                if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                    print(json)
-                    // handle json...
-                }
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        })
-        task.resume()*/
     
     }
     
-    func performRequest(with request: URLRequest) {
+    //MARK: - Subcite Description Request
+    func fetchDescription() {
+        var request = URLRequest(url: subsiteUrl)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            /*if let data = data {
+                do {
+                    let responseData = try JSONDecoder().decode(PostsData.self, from: data)
+                    let post = PostModel(name: responseData.result.name, description: responseData.result.description, avatar_url: responseData.result.avatar_url)
+                    posts.append(photo)
+                    self.delegateFeed?.didUpdatePosts(self, posts: posts)
+                    
+                    
+                } catch let error {
+                     print(error)
+                }
+            }*/
+            
+            /*if let data = data {
+                do {
+                    let responseData = try JSONDecoder().decode(PostsData.self, from: data)
+                    let post = PostModel(name: responseData.result.name, description: responseData.result.description, avatar_url: responseData.result.avatar_url)
+                    posts.append(photo)
+                    self.delegateFeed?.didUpdatePosts(self, posts: posts)
+                    
+                    
+                } catch let error {
+                     print(error)
+                }
+            }*/
+        }
+        task.resume()
+    }
+    
+    //MARK: - Video Posts Request
+    
+    func fetchPosts() {
+        
+        var posts: [PostModel?] = []
+        var post: PostModel?
+        var request = URLRequest(url: postsUrl)
+        var url: URL?
+        
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            if let data = data {
+                
+                do {
+                    let responseData = try JSONDecoder().decode(PostsData.self, from: data)
+                    for item in responseData.result {
+                        /*for block in item.blocks {
+                            
+                            if block.type == "video" {
+                                
+                                //try JSONDecoder().decode(Video.self, from: block as Data)
+                            
+                                if let external = block.data.video?.data.externalService.name,
+                                    let id = block.data.video?.data.externalService.id {
+                                    if external == "youtube" {
+                                        url = URL(string: "https://www.youtube.com/embed/\(id)")
+                                    }
+                                }
+                            }
+                            //print(block.data.video?.data.externalService.name)
+                            //block.data.video?.data.externalService.name
+                            //let externalService = block.data.video.data.external_service.name
+                            //print(externalService)
+                            
+                             
+                            post = PostModel(name: item.title, type: block.type, video_url: url ?? URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
+                        }*/
+                        
+                        url = URL(string: item.cover.url)
+                        
+                        post = PostModel(name: item.title, type: item.cover.additionalData.type, video_url: url ?? URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
+                        
+                        posts.append(post)
+                    }
+                    
+                    let subsite = SubsiteModel(name: responseData.result[0].subsite.name, description: responseData.result[0].subsite.description, avatar_url: responseData.result[0].subsite.avatar_url)
+                    
+                    self.delegateFeed?.didUpdatePosts(self, posts: posts as! [PostModel], subsite: subsite)
+                    
+                    
+                } catch let error {
+                     print(error)
+                }
+            }
+            
+            /*if let data = data {
+                do {
+                    let responseData = try JSONDecoder().decode(PostsData.self, from: data)
+                    let post = PostModel(name: responseData.result.name, description: responseData.result.description, avatar_url: responseData.result.avatar_url)
+                    posts.append(photo)
+                    self.delegateFeed?.didUpdatePosts(self, posts: posts)
+                    
+                    
+                } catch let error {
+                     print(error)
+                }
+            }*/
+        }
+        task.resume()
+        
+        //performRequest(with: request)
+        
+    }
+    
+
+    
+    /*func performRequest(with request: URLRequest) {
                 
         //if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
         
             let task = session.dataTask(with: request) { (data, response, error) in
                 if error != nil {
-                    self.delegate?.didFailWithError(error: error!)
+                    self.delegateFeed?.didFailWithError(error: error!)
                     print(error!)
                     return
                 }
                 
-                if let safeData = data {
+                if let safeData = data, let dataString = String(data: data!, encoding: .utf8) {
+                    print(dataString)
                     if let photos = self.parseJson(safeData) {
-                        self.delegate?.didUpdatePhotos(self, photos: photos as! [PhotoModel])
+                        self.delegateFeed?.didUpdatePosts(self, photos: photos as! [PostModel])
                     }
-                    //print(safeData)
                 }
                 
             }
@@ -160,15 +233,15 @@ struct RequestManager {
         //}
     }
     
-    func parseJson(_ photosData: Data) -> [PhotoModel?]? {
-        print(photosData)
-        var photosResult: [PhotoModel?] = []
+    func parseJson(_ postsData: Data) -> [PostModel?]? {
+        
+        var postResult: [PostModel?] = []
         let decoder = JSONDecoder()
         do {
-            print("dsfsd")
-            print(try decoder.decode(PhotosData.self, from: photosData))
-            let decodeData = try decoder.decode(PhotosData.self, from: photosData)
-            print(decodeData.message.count)
+            //print("dsfsd")
+            //print(try decoder.decode(PhotosData.self, from: photosData))
+            let decodeData = try decoder.decode(PostsData.self, from: postsData)
+            print(decodeData.result.name)
             /*for item in decodeData.photos.photo {
                 
                 let photo = PhotoModel(id: item.id, posterUrl: item.photoUrl, thumbnailUrl: item.thumbnailUrl)
@@ -176,14 +249,14 @@ struct RequestManager {
                 
             }*/
             
-            return photosResult
+            return postResult
 
         } catch {
-            delegate?.didFailWithError(error: error)
+            delegateFeed?.didFailWithError(error: error)
             return nil
         }
 
-    }
+    }*/
     
 }
 
