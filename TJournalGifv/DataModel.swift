@@ -25,3 +25,6 @@ struct UserModel {
     let name: String
     let avatar_url: String
 }
+
+
+

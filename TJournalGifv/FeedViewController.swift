@@ -15,37 +15,30 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var subsiteTitle: UILabel!
     @IBOutlet weak var subsiteDescription: UILabel!
     @IBOutlet weak var subsiteImage: UIImageView!
-    
     @IBOutlet weak var feedTableView: UITableView!
     
+    private var viewModel: FeedViewModel!
     var postManager = RequestManager()
     var posts: [PostModel] = []
-    
-    //1
-    //let video = videos[indexPath.row]
-
-    //2
-    //let videoURL = video.url
-    //let videoURL = URL(string: "https://www.youtube.com/watch?v=zsc-S3-b1YU")
-    let player = AVPlayer(url: URL(string: "https://www.youtube.com/watch?v=zsc-S3-b1YU")!)
+    var site: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         feedTableView.register(UINib(nibName: "FeedViewCell", bundle: nil), forCellReuseIdentifier: "PostCell")
-        feedTableView.delegate = self
+        //feedTableView.delegate = self
         feedTableView.dataSource = self
         feedTableView.prefetchDataSource = self
+        feedTableView.isHidden = true
+
         
-        //feedTableView.rowHeight = UITableView.automaticDimension
-        //feedTableView.estimatedRowHeight = 500.0
+        //postManager.delegateFeed = self
         
-        postManager.delegateFeed = self
-        postManager.fetchPosts()
-    }
-    
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= posts.count
+        let request = PostRequest.getRequest()
+        viewModel = FeedViewModel(request: request, delegate: self)
+        viewModel.fetch()
+        //postManager.fetchPosts()
+
     }
 
 }
@@ -55,7 +48,9 @@ class FeedViewController: UIViewController {
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        //print(viewModel!)
+        //return viewModel.totalCount
+        return 100
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,15 +66,36 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate, UITabl
             //cell.postTitle.isHidden = true
         }
         */
-        cell.configure(post: posts[indexPath.row])
+        //print("cell")
+        //print(posts[indexPath.row])
+        //cell.configure(post: posts[indexPath.row])
+        
+        
+        /*if isLoadingCell(for: indexPath) {
+            cell.configure(with: nil)
+        
+        } else {
+            print("mew")
+            //cell.configure(with: viewModel.contentItem(at: indexPath.row))
+            cell.configure(post: viewModel.posts(at:indexPath.row))
+        }*/
         
         if isLoadingCell(for: indexPath) {
+            cell.configure(with: nil)
+            //print("nil")
+        } else {
+            cell.configure(with: viewModel.contentItem(at: indexPath.row))
+            //print("sfsdf")
+        }
+        
+        
+        /*if isLoadingCell(for: indexPath) {
             print(indexPath)
             //cell.configure(with: nil)
         } else {
             cell.configure(post: posts[indexPath.row])
             //cell.configure(with: posts.contentItem(at: indexPath.row))
-        }
+        }*/
         
         
         //let videoURL = URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
@@ -130,10 +146,31 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate, UITabl
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
-            postManager.fetchPosts()
+            viewModel.fetch()
         }
     }
     
+    
+}
+
+// MARK: - Extension for Request Delegate
+
+extension FeedViewController: FeedViewModelDelegate {
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        guard let newIndexPathsToReload = newIndexPathsToReload else {
+            
+            feedTableView.isHidden = false
+            feedTableView.reloadData()
+            return
+        }
+
+        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
+        feedTableView.reloadRows(at: indexPathsToReload, with: .automatic)
+    }
+  
+    func onFetchFailed(with reason: String) {
+        print(reason)
+    }
 }
 
 // MARK: - Extension for Request Delegate
@@ -152,5 +189,23 @@ extension FeedViewController: RequestFeedManagerDelegate {
     
     func didFailWithError(error: Error) {
         print(error)
+    }
+}
+
+
+
+private extension FeedViewController {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        //print(indexPath.row)
+        //print(viewModel.currentCount)
+        //print(indexPath.row >= viewModel.currentCount)
+        //print("mew")
+        return indexPath.row >= viewModel.currentCount
+    }
+  
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = feedTableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
     }
 }

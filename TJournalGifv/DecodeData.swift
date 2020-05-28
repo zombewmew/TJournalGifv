@@ -9,14 +9,14 @@
 import Foundation
 
 struct PostsData: Decodable {
-    let result: [Result]
-    let message: String
+    let message: String?
+    let result: [DataResult]
 }
 
-struct Result: Decodable {
+struct DataResult: Decodable {
     let subsite: Subsite
     let title: String
-    let blocks: [Block]
+    //let blocks: [Block]
     let cover: Cover
 }
 
@@ -181,3 +181,10 @@ struct qrDataResult: Decodable {
         return URL(string: urlString)
     }
 }*/
+
+
+struct ContentItem: Decodable {
+    let intro: String
+    let cover: Cover
+}
+

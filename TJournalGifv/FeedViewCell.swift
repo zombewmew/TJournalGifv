@@ -24,12 +24,56 @@ class FeedViewCell: UITableViewCell {
         // Initialization code
         
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        //configure(with: .none)
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
+    
+    var contentType: VideoType = .gif
+    
+    func configure(with item: DataResult?) {
+        if let item = item {
+            let urlString = item.cover.url
+            print(item.cover.additionalData.type)
+            contentType = item.cover.additionalData.type
+            //contentURL = URL(string: urlString)
+            //title.text = contentItem.intro
+            //title.alpha = 1
+        } else {
+            //title.alpha = 0
+            //contentURL = nil
+        }
+    }
+    
+    /*func configure(with post: DataResult) {
+        print(post)
+      if let post = post {
+        switch post.type {
+        case VideoType.jpg:
+            pasteImage(url: post.video_url)
+        case VideoType.gif:
+            pasteVideo(url:  post.video_url)
+        break
+        }
+        postTitle.text = post.name
+        
+        postTitle?.text = post.name
+        //reputationLabel?.text = post.reputation
+        //displayNameLabel.alpha = 1
+        //reputationContainerView.alpha = 1
+      } else {
+        //displayNameLabel.alpha = 0
+        //reputationContainerView.alpha = 0
+      }
+    }*/
     
     func configure(post: PostModel) {
         switch post.type {

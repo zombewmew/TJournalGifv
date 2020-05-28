@@ -171,9 +171,9 @@ struct RequestManager {
                             post = PostModel(name: item.title, type: block.type, video_url: url ?? URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
                         }*/
                         
-                        url = URL(string: item.cover.url)
+                        //url = URL(string: item.cover.url)
                         
-                        post = PostModel(name: item.title, type: item.cover.additionalData.type, video_url: url ?? URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
+                        //post = PostModel(name: item.title, type: item.cover.additionalData.type, video_url: url ?? URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
                         
                         posts.append(post)
                     }

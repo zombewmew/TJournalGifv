@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3135EBBD246B3BDB00FCFA90 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */; };
+		3135EBCA2470277D00FCFA90 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBC92470277D00FCFA90 /* FeedViewModel.swift */; };
+		3135EBCC24702B5200FCFA90 /* StackExchangeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBCB24702B5200FCFA90 /* StackExchangeClient.swift */; };
+		3135EBCE24702BB200FCFA90 /* PostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBCD24702BB200FCFA90 /* PostRequest.swift */; };
+		3135EBD024702CD600FCFA90 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBCF24702CD600FCFA90 /* URLRequest.swift */; };
+		3135EBD224702DB500FCFA90 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3135EBD124702DB500FCFA90 /* Result.swift */; };
 		313C2A17245A1A7800EBF4A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A16245A1A7800EBF4A1 /* AppDelegate.swift */; };
 		313C2A19245A1A7800EBF4A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A18245A1A7800EBF4A1 /* SceneDelegate.swift */; };
 		313C2A1B245A1A7800EBF4A1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2A1A245A1A7800EBF4A1 /* FeedViewController.swift */; };
@@ -26,6 +31,11 @@
 
 /* Begin PBXFileReference section */
 		3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		3135EBC92470277D00FCFA90 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		3135EBCB24702B5200FCFA90 /* StackExchangeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackExchangeClient.swift; sourceTree = "<group>"; };
+		3135EBCD24702BB200FCFA90 /* PostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequest.swift; sourceTree = "<group>"; };
+		3135EBCF24702CD600FCFA90 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		3135EBD124702DB500FCFA90 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		313C2A13245A1A7800EBF4A1 /* TJournalGifv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TJournalGifv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		313C2A16245A1A7800EBF4A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		313C2A18245A1A7800EBF4A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,7 +88,12 @@
 				31422399245DFFD200260B6D /* FeedViewCell.swift */,
 				3142239A245DFFD200260B6D /* FeedViewCell.xib */,
 				313C2A18245A1A7800EBF4A1 /* SceneDelegate.swift */,
+				3135EBD124702DB500FCFA90 /* Result.swift */,
 				313C2A1A245A1A7800EBF4A1 /* FeedViewController.swift */,
+				3135EBC92470277D00FCFA90 /* FeedViewModel.swift */,
+				3135EBCB24702B5200FCFA90 /* StackExchangeClient.swift */,
+				3135EBCD24702BB200FCFA90 /* PostRequest.swift */,
+				3135EBCF24702CD600FCFA90 /* URLRequest.swift */,
 				3142238D245C5A9D00260B6D /* ProfileViewController.swift */,
 				313C2A2A245AD60800EBF4A1 /* RequestManager.swift */,
 				3135EBBC246B3BDA00FCFA90 /* KeyChain.swift */,
@@ -167,11 +182,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				3135EBBD246B3BDB00FCFA90 /* KeyChain.swift in Sources */,
+				3135EBCE24702BB200FCFA90 /* PostRequest.swift in Sources */,
 				313C2A1B245A1A7800EBF4A1 /* FeedViewController.swift in Sources */,
+				3135EBCA2470277D00FCFA90 /* FeedViewModel.swift in Sources */,
 				313C2A17245A1A7800EBF4A1 /* AppDelegate.swift in Sources */,
 				313C2A2F245AD69700EBF4A1 /* DecodeData.swift in Sources */,
+				3135EBD224702DB500FCFA90 /* Result.swift in Sources */,
 				313C2A19245A1A7800EBF4A1 /* SceneDelegate.swift in Sources */,
+				3135EBCC24702B5200FCFA90 /* StackExchangeClient.swift in Sources */,
 				3142239B245DFFD200260B6D /* FeedViewCell.swift in Sources */,
+				3135EBD024702CD600FCFA90 /* URLRequest.swift in Sources */,
 				3142239E245E1A5D00260B6D /* VideoPlayerView.swift in Sources */,
 				3142238E245C5A9D00260B6D /* ProfileViewController.swift in Sources */,
 				313C2A2D245AD66900EBF4A1 /* DataModel.swift in Sources */,
